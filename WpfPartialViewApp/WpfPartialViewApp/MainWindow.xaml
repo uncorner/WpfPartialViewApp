@@ -1,0 +1,94 @@
+﻿<Window x:Class="WpfPartialViewApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WpfPartialViewApp" Height="600" Width="815"
+        MinHeight="500" MinWidth="700"
+        Background="{StaticResource WindowBrush}"
+        >
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"></Setter>
+        </Style>
+        <Style x:Key="CaptionStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#6A9592"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"></Setter>
+            <Setter Property="FontSize" Value="32"></Setter>
+        </Style>
+        <Style x:Key="OperationButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10,7"></Setter>
+        </Style>
+        <BitmapImage x:Key="LogoImage" UriSource="pack://application:,,,/Resources/Images/psd-camera-film-reel-icon.png">
+        </BitmapImage>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="150" MaxWidth="300" Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="3" Margin="0" BorderThickness="0,0,0,1" BorderBrush="#C5C089" Background="{StaticResource HeaderBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{StaticResource LogoImage}" Margin="10,10,10,0" Height="60" VerticalAlignment="Bottom"></Image>
+                <TextBlock Grid.Column="1"  Text="Фильмотека" VerticalAlignment="Bottom" Margin="20,0,0,0"
+                           Style="{StaticResource CaptionStyle}">
+                </TextBlock>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                Margin="10,10,20,10" Orientation="Horizontal">
+                    <Button x:Name="addMovieButton" Style="{StaticResource OperationButtonStyle}" Click="addMovieButton_Click">Добавить фильм</Button>
+                    <Button x:Name="removeMovieButton" Style="{StaticResource OperationButtonStyle}"
+                            Margin="40,0,0,0" Click="removeMovieButton_Click">Удалить фильм</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ListBox Grid.Row="1" x:Name="movieListBox" HorizontalContentAlignment="Stretch"
+                     Background="Transparent" ItemsSource="{Binding Path=Movies, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                     Padding="5,10,5,5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="4" Padding="0" BorderThickness="1"
+                                BorderBrush="SteelBlue" CornerRadius="4" Height="70" >
+                        <Grid>
+                            <Grid Background="Gray" Opacity="0.3"></Grid>
+                            <Grid Margin="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Column="0" Width="40" Source="{Binding Path=Poster}"
+                                           VerticalAlignment="Top">
+                                </Image>
+                                <TextBlock Grid.Column="1" Margin="10,0,0,0" FontWeight="Bold"
+                                               Text="{Binding Path=Name}" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" VerticalAlignment="Stretch"
+                          HorizontalAlignment="Center" Background="#A0A0A0">
+        </GridSplitter>
+
+        <ContentControl x:Name="placeholder" Grid.Row="1" Grid.Column="2" Margin="30,10,20,10">
+        </ContentControl>
+    </Grid>
+</Window>
